@@ -1,0 +1,3 @@
+"""
+NovaCart Enterprise AI Assistant
+"""

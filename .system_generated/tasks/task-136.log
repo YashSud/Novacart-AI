@@ -1,0 +1,24 @@
+============================= test session starts =============================
+platform win32 -- Python 3.10.7, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\Yash Sud\AppData\Local\Programs\Python\Python310\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Yash Sud\.gemini\antigravity-ide\brain\4e73650c-566f-42b1-9e90-0f0f8134df62
+plugins: anyio-4.10.0, dash-4.0.0, timeout-2.4.0
+collecting ... collected 4 items
+
+tests/test_api.py::test_health_endpoint PASSED                           [ 25%]
+tests/test_api.py::test_authentication_failure PASSED                    [ 50%]
+tests/test_api.py::test_semantic_search_with_metadata_filter PASSED      [ 75%]
+tests/test_api.py::test_multihop_reasoning_pipeline PASSED               [100%]
+
+============================== warnings summary ===============================
+..\..\..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\fastapi\testclient.py:1
+  C:\Users\Yash Sud\AppData\Local\Programs\Python\Python310\lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+..\..\..\..\AppData\Local\Programs\Python\Python310\lib\site-packages\huggingface_hub\file_download.py:139
+  C:\Users\Yash Sud\AppData\Local\Programs\Python\Python310\lib\site-packages\huggingface_hub\file_download.py:139: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\Yash Sud\.cache\huggingface\hub\models--sentence-transformers--all-MiniLM-L6-v2. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
+  To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
+    warnings.warn(message)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 4 passed, 2 warnings in 53.25s ========================
