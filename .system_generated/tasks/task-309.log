@@ -1,5 +1,0 @@
-Successfully scheduled one-shot timer.
-Expected to fire at: 2026-07-29T17:23:05+05:30
-Prompt: Check port 8080 server readiness
-
-[2026-07-29T17:23:05+05:30] Timer fired.

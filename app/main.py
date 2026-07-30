@@ -1,20 +1,24 @@
 """
 FastAPI REST API Application for NovaCart Enterprise AI Assistant.
-Implements simple X-API-KEY authentication, interactive GUI dashboard, and required endpoints:
+Implements simple X-API-KEY authentication, interactive GUI dashboard,
+global exception handling for server stability, and required endpoints:
 - GET /
 - GET /health
 - POST /search
 - POST /query
 """
+import logging
 from contextlib import asynccontextmanager
 from typing import Optional
-from fastapi import FastAPI, Security, HTTPException, status, Depends
+from fastapi import FastAPI, Security, HTTPException, status, Depends, Request
 from fastapi.security.api_key import APIKeyHeader
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 
 from app.db import ingest_documents, search_documents, collection
 from app.pipeline import execute_multihop_reasoning
+
+logger = logging.getLogger("novacart.server")
 
 # Authentication: Simple X-API-KEY Header check
 API_KEY_NAME = "X-API-KEY"
@@ -33,7 +37,10 @@ def verify_api_key(api_key: Optional[str] = Depends(api_key_header)):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Auto-ingest documents on startup
-    ingest_documents()
+    try:
+        ingest_documents()
+    except Exception as e:
+        logger.error(f"Ingestion warning: {e}")
     yield
 
 app = FastAPI(
@@ -42,6 +49,15 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
+# Server Stability: Catch-all Global Exception Handler to prevent server crashes
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Unhandled error processing {request.url.path}: {exc}")
+    return JSONResponse(
+        status_code=500,
+        content={"status": "error", "message": "An internal server error occurred, but the server remains stable."}
+    )
 
 
 # --- Request Models ---
